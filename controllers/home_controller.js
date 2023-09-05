@@ -4,7 +4,7 @@ module.exports.home = function(req,res){
 }
 */
 module.exports.home = function(req,res){
-    return res.render('home',{
+    return res.render('home',{            // home is home.ejs
         title: "home page"
     })
 }
