@@ -2,6 +2,17 @@ const express = require('express');
 const app  = express();
 const port = 8000;
 
+// to include static files that we have made in assets folder css js images
+app.use(express.static('./assets'))
+
+/*
+    this is to tell the App that individual styles of individual pages
+    should come on layout.ejs when ever it see the link tag then it notify the aap (index.js)
+    using below 2 lines of code
+*/
+app.set('layout extractStyles',true);
+app.set('layout extractScripts', true);
+
 const expressLayouts = require('express-ejs-layouts');
 
 app.use(expressLayouts);

@@ -1,11 +1,15 @@
 <html>
 <head>
     <title><%= title %></title>
+    <link rel="stylesheet" href="../css/layout.css">  <!-- .. means go one folder up-->
+    <%- style %>
 </head>
 <body>
         <%- include ('_header') ; %>
         <!-- this is the content part (variable content) comes in body from the each controller that will render at runtime -->
         <%- body %>
         <%- include ('_footer'); %>
+
+        <%- script %>
 </body>
 </html>
