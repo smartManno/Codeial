@@ -2,6 +2,9 @@ const express = require('express');
 const app  = express();
 const port = 8000;
 
+// to include databse as db connection is written in mongoose.js
+const db = require('./config/mongoose');
+
 // to include static files that we have made in assets folder css js images
 app.use(express.static('./assets'))
 
