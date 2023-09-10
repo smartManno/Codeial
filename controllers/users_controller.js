@@ -129,24 +129,64 @@ module.exports.create = async function(req, res) {
 // or we can redirect to same / sign-up page
 
 //finding use by email
-        const newUser = await User.findOne({ email: req.body.email});
+       // const newUser = await User.findOne({ email: req.body.email});
+        const user = await User.findOne({ email: req.body.email});
 
  //if user email is unique then only we will create he user in database
  //this new user is not present in database       
-        if (!newUser) {
-            const creatingUserInDb = await User.create(req.body);
-            console.log('User created successfully in the database', creatingUserInDb);
+       // if (!newUser) {
+        if (!user) {    
+            //const creatingUserInDb = await User.create(req.body);
+            const user = await User.create(req.body);
+           // console.log('User created successfully in the database', creatingUserInDb);
+            console.log('User created successfully in the database', user);
             return res.redirect('/users/sign-in');
         }
         
    // user with the same email id already exists in database so simply redirect to the sign-up page     
         else {
-            console.log('User with this email id already exists', newUser.email);
+            //console.log('User with this email id already exists', newUser.email);
+            console.log('User with this email id already exists', user.email);
             return res.redirect('back');
         }
     } catch (err) {
         console.error('An error occurred during user registration:', err);
         return res.redirect('/users/sign-up');
+    }
+};
+
+// creating controller action for sign in
+
+module.exports.createSession = async function(req , res){
+    try{
+        // we are at sign-in then lets verify the username i.e email_id
+        // so lets find the user email
+
+        //here User is model or db which is giving all content to user
+        const user = await User.findOne({email: req.body.email});
+
+        // handling the password which does not match
+        if(user){
+            if(user.password != req.body.password){
+                console.log('entered password does not match');
+                return res.redirect('back');
+            }
+            // handle the session creation (.id will give only _id from robo 3T )
+            // if we will user._id this will give _id as encrypted form in cookies of application dev tools
+            res.cookie('user_id',user._id);
+            return res.redirect('/users/profile');
+        }
+
+            else{
+                // handle if user not found
+                return res.redirect('back');
+            }
+        } 
+
+    catch(err){
+        console.error('An error occurred during user sign-in:', err);
+        return res.redirect('/users/sign-in');
+
     }
 };
 
