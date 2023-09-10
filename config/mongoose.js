@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 
 /*
     1. here we are connecting mongoose with codeial_development region
-    2. which is running our laptop/machine called localhost
-    3. in that localhost mongodb database NOsql system is running in backend 
+    2. which is running on our laptop/machine called localhost
+    3. in that localhost mongodb NOsql database system is running in backend 
 */
 mongoose.connect('mongodb://localhost/codeial_development');
 

@@ -1,6 +1,12 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app  = express();
 const port = 8000;
+
+//first user data need to be parse by middleware
+// after that cookie data will pe parse by middleware when send to server
+app.use(express.urlencoded());
+app.use(cookieParser());
 
 // to include databse as db connection is written in mongoose.js
 const db = require('./config/mongoose');
