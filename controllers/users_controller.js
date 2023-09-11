@@ -1,9 +1,35 @@
 const User = require('../models/user');
-module.exports.profile = function(req,res){
-     return res.render('user_profile',{      // userprofile.ejs page inside views folder
-         title: "users page"
-     });
-}   
+module.exports.profile = async function (req, res) {
+    try {
+        // here we are checking user_id is present in cookies or not
+        if (req.cookies.user_id) {
+
+            // if yes then find the whole user record using find by Id because we have set the cookies using user_id 
+            // here User is model or db where whole record is stored
+            const user = await User.findById(req.cookies.user_id);
+
+            // if user present that means authentication success then show the name and email on profile page
+            if (user) {
+                return res.render('user_profile', {
+                    title: "User Profile",
+                    user: user
+                });
+            }
+        }
+        // if someone modified or deleted the cookie from the browser then user should
+        // redirect to sign-in page that he/she might authenticate himself
+        return res.redirect('/users/sign-in');
+    } catch (err) {
+
+        // for any other error comes then general err 
+        console.error('Error in profile route:', err);
+        return res.redirect('/users/sign-in');
+    }
+};
+    
+
+    
+  
 
      // rendering the sign-Up form and we will use this signUp action in router
 module.exports.signUp = function(req, res){
@@ -175,6 +201,7 @@ module.exports.createSession = async function(req , res){
             // if we will user._id this will give _id as encrypted form in cookies of application dev tools
             res.cookie('user_id',user._id);
             return res.redirect('/users/profile');
+    
         }
 
             else{
@@ -189,6 +216,8 @@ module.exports.createSession = async function(req , res){
 
     }
 };
+
+
 
 
 

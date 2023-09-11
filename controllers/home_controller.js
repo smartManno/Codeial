@@ -2,18 +2,6 @@
 module.exports.home = function(req,res){
     return res.end('<h1> This is home controlle      
     
-    
-    
-    
-    
-℀
-
-   
-
-        
-
-
-
 */
 module.exports.home = function(req,res){
     console.log(req.cookies);
@@ -26,3 +14,4 @@ module.exports.home = function(req,res){
 }
 
 // module.exports.actionName = function(req, res){}
+
